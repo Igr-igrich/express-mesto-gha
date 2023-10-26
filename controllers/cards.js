@@ -49,11 +49,12 @@ const likeCard = async (req, res) => {
       { $addToSet: { likes: req.user._id } },
       { new: true },
     );
-    return res.send(card);
-  } catch (error) {
-    if (error.message === 'NotFound') {
+    console.log(card);
+    if (!card) {
       return res.status(404).send({ message: 'Карточка по id  не найдена' });
     }
+    return res.send(card);
+  } catch (error) {
     if (error.name === 'CastError') {
       return res.status(400).send({ message: 'Передан невалидный id' });
     }
