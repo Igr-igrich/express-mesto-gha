@@ -28,7 +28,6 @@ const getUserById = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const newUser = await new User(req.body);
-
     return res.status(201).send(await newUser.save());
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -42,9 +41,10 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
+  const owner = req.user._id;
   try {
     const user = await User.findByIdAndUpdate(
-      req.params.id,
+      owner,
       { name: req.body.name, about: req.body.about },
       {
         new: true,
@@ -65,8 +65,9 @@ const updateUser = async (req, res) => {
 
 const updateUserAvatar = async (req, res) => {
   try {
+    const owner = req.user._id;
     const user = await User.findByIdAndUpdate(
-      req.params.id,
+      owner,
       { avatar: req.body.avatar },
       {
         new: true,

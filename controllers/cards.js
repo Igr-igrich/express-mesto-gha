@@ -15,8 +15,7 @@ const createCard = async (req, res) => {
 
   try {
     const newCard = await new Card({ name, link, owner });
-
-    return res.status(201).send(newCard);
+    return res.status(201).send(await newCard.save());
   } catch (error) {
     if (error.name === 'ValidationError') {
       return res
@@ -30,8 +29,7 @@ const createCard = async (req, res) => {
 
 const deleteCard = async (req, res) => {
   try {
-    const { cardId } = req.params.cardId;
-    const card = await Card.findByIdAndRemove(cardId).orFail(new Error('NotFound'));
+    const card = await Card.findByIdAndRemove(req.params.cardId).orFail(new Error('NotFound'));
     return res.send(card);
   } catch (error) {
     if (error.message === 'NotFound') {
