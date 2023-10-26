@@ -16,7 +16,7 @@ const createCard = async (req, res) => {
   try {
     const newCard = await new Card({ name, link, owner });
 
-    return res.status(201).send(await newCard.save());
+    return res.status(201).send(newCard);
   } catch (error) {
     if (error.name === 'ValidationError') {
       return res
