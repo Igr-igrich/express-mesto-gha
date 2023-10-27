@@ -33,4 +33,4 @@ app.use("/*", (req, res, next) => {
   next();
 });
 
-ViteExpress.listen(app, PORT, () => console.log(`Server is listening on port ${PORT}...`));
+ViteExpress.listen(app, process.env.PORT, () => console.log(`Server is listening on port ${process.env.PORT}...`));
