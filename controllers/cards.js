@@ -5,7 +5,7 @@ const getCards = async (req, res) => {
     const cards = await Card.find({});
     return res.send(cards);
   } catch (error) {
-    return res.status(500).send({ message: 'Ошибка на стороне сервера' });
+    return res.status(500).send({ message: 'На сервере произошла ошибка' });
   }
 };
 
@@ -23,7 +23,7 @@ const createCard = async (req, res) => {
         .send({ message: 'Ошибка валидации полей', ...error });
     }
 
-    return res.status(500).send({ message: 'Ошибка на стороне сервера' });
+    return res.status(500).send({ message: 'На сервере произошла ошибка' });
   }
 };
 
@@ -38,7 +38,7 @@ const deleteCard = async (req, res) => {
     if (error.name === 'CastError') {
       return res.status(400).send({ message: 'Передан невалидный id' });
     }
-    return res.status(500).send({ message: 'Ошибка на стороне сервера' });
+    return res.status(500).send({ message: 'На сервере произошла ошибка' });
   }
 };
 
@@ -57,7 +57,7 @@ const likeCard = async (req, res) => {
     if (error.name === 'CastError') {
       return res.status(400).send({ message: 'Передан невалидный id' });
     }
-    return res.status(500).send({ message: 'Ошибка на стороне сервера' });
+    return res.status(500).send({ message: 'На сервере произошла ошибка' });
   }
 };
 
@@ -76,7 +76,7 @@ const dislikeCard = async (req, res) => {
     if (error.name === 'CastError') {
       return res.status(400).send({ message: 'Передан невалидный id' });
     }
-    return res.status(500).send({ message: 'Ошибка на стороне сервера' });
+    return res.status(500).send({ message: 'На сервере произошла ошибка' });
   }
 };
 
