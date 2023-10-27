@@ -2,6 +2,7 @@ const express = require('express');
 const ViteExpress = require('vite-express');
 const mongoose = require('mongoose');
 const router = require('./routes/index');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
@@ -15,7 +16,7 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect('mongodb://127.0.0.1:27017/mestodb', {
+  .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
   })
   .then(() => {
