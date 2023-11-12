@@ -5,6 +5,8 @@ const { generateToken } = require('../utils/jwt');
 const MONGO_DUPLICATE_ERROR_CODE = 11000;
 const SALT_ROUNDS = 10;
 
+const { SUCCESS, CREATED } = require('../utils/statusCodes')
+
 const NotFoundError = require('../errors/not-found-err');
 const ValidationError = require('../errors/validation-err');
 const CastError = require('../errors/cast-err');
@@ -18,7 +20,7 @@ const createUser = async (req, res, next) => {
     const hash = await bcrypt.hash(password, SALT_ROUNDS);
 
     const newUser = await User.create({ name, about, avatar, email, password: hash });
-    return res.status(201).send( await {
+    return res.status(CREATED).send( await {
       name: newUser.name,
       about: newUser.about,
       avatar: newUser.avatar,
@@ -56,7 +58,7 @@ const login = async (req, res, next) => {
       sameSite: true,
     })
 
-    return res.status(200).send({ token })
+    return res.status(SUCCESS).send({ token })
 
   } catch (error) {
     if (error.name === 'ValidationError') {

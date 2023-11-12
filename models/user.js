@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
-const isUrl = require('validator/lib/isUrl');
+const isUrl = require('validator/lib/isURL');
 
 const userSchema = new mongoose.Schema({
   email: {
