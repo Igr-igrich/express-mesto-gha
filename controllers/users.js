@@ -28,7 +28,6 @@ const createUser = async (req, res, next) => {
       _id: newUser._id,
     })
   } catch (error) {
-    console.log(error);
     if (error.code === MONGO_DUPLICATE_ERROR_CODE) {
       return next(new ConflictError('Пользователь с таким email уже зарегистрирован'))
     }

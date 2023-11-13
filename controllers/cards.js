@@ -5,7 +5,7 @@ const { CREATED } = require('../utils/statusCodes')
 const NotFoundError = require('../errors/not-found-err');
 const ValidationError = require('../errors/validation-err');
 const CastError = require('../errors/cast-err');
-const ForbiddenError = require('../errors/unauthorized-err');
+const ForbiddenError = require('../errors/forbidden-error');
 
 const getCards = async (req, res, next) => {
   try {
@@ -33,17 +33,17 @@ const createCard = async (req, res, next) => {
 };
 
 const deleteCard = async (req, res, next) => {
-  console.log(CREATED);
   const { cardId } = req.params;
   const { _id: userId } = req.user;
 
   try {
-    const card = await Card.findByIdAndRemove(cardId).orFail(() => new NotFoundError('Пользователь не найден'));
+
+    const card = await Card.findById(cardId)
 
     if (userId !== card.owner.toString()) {
       throw new ForbiddenError('Нельзя удалить чужую карточку')
     }
-
+    await Card.findByIdAndRemove(cardId).orFail(() => new NotFoundError('Пользователь не найден'));
     return res.send(card);
 
   } catch (error) {
