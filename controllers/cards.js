@@ -40,15 +40,11 @@ const deleteCard = async (req, res, next) => {
 
     const card = await Card.findById(cardId).orFail(new NotFoundError('Такой карточки не существует'));
 
-    // if (!card) {
-    //   throw new NotFoundError('Такой карточки не существует');
-    // }
-
     if (userId !== card.owner.toString()) {
       throw new ForbiddenError('Нельзя удалить чужую карточку')
     }
 
-    await Card.findByIdAndRemove(cardId);
+    await Card.deleteOne(card);
 
     return res.send(card);
 
